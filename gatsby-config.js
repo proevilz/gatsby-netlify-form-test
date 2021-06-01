@@ -2,5 +2,5 @@ module.exports = {
   siteMetadata: {
     title: "gatsby-netlify-form-test",
   },
-  plugins: [],
+  plugins: ["@chakra-ui/gatsby-plugin"],
 };
