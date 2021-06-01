@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Button } from "@chakra-ui/button";
 import { Box, Text, Container, Flex } from "@chakra-ui/layout";
+import { Link, navigate } from "gatsby";
 import {
   FormControl,
   FormLabel,
@@ -14,9 +15,9 @@ const encode = (data) => {
     .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
     .join("&");
 };
+
 const ContactPage = () => {
   const [state, setState] = React.useState({});
-  const [isSent, setIsSent] = React.useState(false);
   const handleChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
@@ -32,7 +33,7 @@ const ContactPage = () => {
         ...state,
       }),
     })
-      .then(() => setIsSent(true))
+      .then(() => navigate("/thanks"))
       .catch((error) => alert(error));
   };
 
@@ -61,26 +62,32 @@ const ContactPage = () => {
           <Flex flexDir="column">
             <FormControl id="name" mb="10">
               <FormLabel>Your name</FormLabel>
-              <Input type="name" onChange={handleChange} />
+              <Input type="text" name="name" onChange={handleChange} />
             </FormControl>
 
             <FormControl id="email" mb="10">
               <FormLabel>Your email address</FormLabel>
-              <Input type="email" onChange={handleChange} />
+              <Input type="email" name="email" onChange={handleChange} />
               <FormHelperText>We'll never share your email.</FormHelperText>
             </FormControl>
 
             <FormControl id="message" mb="10">
               <FormLabel>Your message</FormLabel>
               <Textarea
+                name="message"
                 placeholder="Here is a sample message. Be nice."
                 onChange={handleChange}
               />
             </FormControl>
 
-            <Button ml="auto" colorScheme="blue" type="submit">
-              Send
-            </Button>
+            <Flex>
+              <Button as={Link} to="/" mr="auto" type="button">
+                Home
+              </Button>
+              <Button ml="auto" colorScheme="blue" type="submit">
+                Send
+              </Button>
+            </Flex>
           </Flex>
         </form>
       </Container>
